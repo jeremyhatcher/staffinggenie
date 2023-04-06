@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.core.validators import RegexValidator
 from django.utils import timezone
 from django.db import models
-from django.core.exceptions import ValidationError
+from django.conf import settings
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
@@ -46,8 +46,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone_number']
-
-
+    
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -70,10 +69,16 @@ class Opportunity(models.Model):
         ('AP', 'AP'),
     ))
     description = models.TextField(blank=True, null=True)
-    reserved_by = models.ForeignKey('CustomUser', null=True, blank=True, on_delete=models.PROTECT)
-    
+    reserved_by = models.ManyToManyField(CustomUser, blank=True, related_name='opportunities_reserved')
+    reserved_by_names = models.CharField(max_length=255, blank=True)
+
     def __str__(self):
         return f"{self.date} - {self.start_time} to {self.end_time} - {self.total_slots-self.available_slots}/{self.total_slots} slots reserved"
+
+    def get_reserved_by_names(self):
+        if self.reserved_by is not None:
+            return f"{self.reserved_by.first_name} {self.reserved_by.last_name}"
+        return ""
 
     def is_fully_booked(self):
         return self.available_slots == 0
