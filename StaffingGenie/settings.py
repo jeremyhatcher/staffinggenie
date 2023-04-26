@@ -90,10 +90,6 @@ DATABASES = {
     }
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Branch1
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -118,11 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-<<<<<<< HEAD
-TIME_ZONE = 'UTC'
-=======
 TIME_ZONE = 'America/Los_Angeles'
->>>>>>> Branch1
 
 USE_I18N = True
 

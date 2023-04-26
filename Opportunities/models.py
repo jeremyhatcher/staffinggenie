@@ -54,12 +54,7 @@ class Opportunity(models.Model):
     date = models.DateField(default=timezone.now)
     start_time = models.CharField(max_length=7)
     end_time = models.CharField(max_length=7)
-<<<<<<< HEAD
-    available_slots = models.PositiveIntegerField(default=0)
-    total_slots = models.PositiveIntegerField(default=0)
-=======
     available_slots = models.PositiveIntegerField(default=1)
->>>>>>> Branch1
     job_functions = models.CharField(max_length=255, choices=(
         ('Unloading', 'Unloading'),
         ('Loading', 'Loading'),
@@ -77,11 +72,7 @@ class Opportunity(models.Model):
     reserved_by_names = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-<<<<<<< HEAD
-        return f"{self.date} - {self.start_time} to {self.end_time} - {self.total_slots-self.available_slots}/{self.total_slots} slots reserved"
-=======
         return f"{self.date} - {self.start_time} to {self.end_time} - {self.available_slots} more available opportunities"
->>>>>>> Branch1
 
     def get_reserved_by_names(self):
         if self.reserved_by is not None:
